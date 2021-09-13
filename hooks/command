@@ -359,6 +359,13 @@ fi
 # Add the job id as meta-data for reference in pre-exit
 args+=("--label" "com.buildkite.job-id=${BUILDKITE_JOB_ID}")
 
+# Add any extra args
+if plugin_read_list_into_result BUILDKITE_PLUGIN_DOCKER_EXTRA_ARGS ; then
+  for arg in "${result[@]}" ; do
+    args+=("$arg")
+  done
+fi
+
 # Add the image in before the shell and command
 args+=("${BUILDKITE_PLUGIN_DOCKER_IMAGE}")
 
